@@ -3,15 +3,14 @@ name: Pipeline DevSecOps Completo
 # Defina os gatilhos (quando o pipeline deve rodar)
 on:
   push:
-    branches: [ "main", "develop" ]
+    branches: [ "master", "test/provoke-security-failures" ]
   pull_request:
-    branches: [ "main", "develop" ]
+    branches: [ "master", "test/provoke-security-failures" ]
 
 # Bloco OBRIGATÓRIO que estava faltando
 jobs:
   security-scan:
     name: 🛡️ DevSecOps (SAST Semgrep & Container Trivy)
-    needs: [lint-and-test] # Só executa se houver outro job chamado 'lint-and-test' antes
     runs-on: ubuntu-latest
     timeout-minutes: 15
     permissions:
@@ -43,7 +42,7 @@ jobs:
       # ETAPA 3: Scanner de Vulnerabilidades de Imagem com Trivy
       # -------------------------------------------------------------
       - name: 🛡️ Escanear Imagem Docker com Aqua Security Trivy
-        uses: aquasecurity/trivy-action@0.28.0
+        uses: aquasecurity/trivy-action@master
         with:
           image-ref: 'app-audit:local'
           format: 'table'
