@@ -11,7 +11,6 @@ on:
 jobs:
   security-scan:
     name: 🛡️ DevSecOps (SAST Semgrep & Container Trivy)
-    needs: [lint-and-test] # Só executa se houver outro job chamado 'lint-and-test' antes
     runs-on: ubuntu-latest
     timeout-minutes: 15
     permissions:
